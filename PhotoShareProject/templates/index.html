@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <script>
+    function show(i)
+{
+    var x1="comment_"+i
+    var x2="comment_submit_"+i
+document.getElementById(x1).style.display="block" ;
+document.getElementById(x2).style.display="block" ;
+}
+</script>
+</head>
+<body>
+
+
+<div class="container">
+<div align="center">
+    <h1>PHOTOSHARE</h1>
+				<form action="/login/" method="POST" class="loginForm">
+
+						<input type="text" name="username" maxlength="40" class="form-control" placeholder="Full Name"><br>
+						<input type="password" name="pass" maxlength="20" class="form-control" placeholder="Password"><br>
+						<input type="submit" class="btn btn-success" name="login" value="Log In"><br>
+
+				</form><br>
+            <form method="GET" action="/signup/">
+            <input type="submit" class="btn btn-info" name="newuser" value="Sign up">
+            </form>
+                {{ data }}
+
+            </div>
+</div>
+<br><br>
+<div class="container">
+<div class="row">
+<div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<h1 class="gallery-title" align="center">Recently Posted Images</h1>
+</div>
+<br>
+<br/>
+
+
+    {%  for i in Photo_array %}
+        <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter all">
+            <img src="{{ url_for('static', filename = i[3]) }}" width="200"><br>
+            <kbd>Caption: {{ i[2] }} </kbd>
+                <div class="imgButton">
+                    {% for k in likes %}
+                        {% if k and k[0][0]==i[0] %}Number of Likes:
+                        {{ k[0][1] }}
+                        {% endif %}
+                    {% endfor %}
+        <input type="button" onclick="show({{ i[0] }})" value="Comment" name="showbutton">
+            <form action="{{ url_for('anonymous_comment',photo_d=i[0]) }}" method="GET">
+            <input type="text" id="comment_{{ i[0] }}" name="user_comment" style="display:none;" /><br />
+            <input type="submit" id="comment_submit_{{ i[0] }}" value="Post" style="display:none;"/>
+            </form>
+                </div>
+        <strong>Comments by users: </strong><br>
+        {% for j in c_uid %}
+            {% if j[2] == i[0] %}
+                <strong>{{ j[0]}}</strong> : {{ j[3] }}<br>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {%  endfor %}
+</div>
+
+
+</div>
+
+
+</body>
+</html>

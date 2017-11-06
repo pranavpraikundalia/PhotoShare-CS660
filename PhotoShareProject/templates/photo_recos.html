@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <script>
+    function show(i)
+{
+    var x1="comment_"+i
+    var x2="comment_submit_"+i
+document.getElementById(x1).style.display="block" ;
+document.getElementById(x2).style.display="block" ;
+}
+</script>
+</head>
+
+
+<header>
+  <h1>Your Photo Recommendations </h1>
+</header>
+
+<nav>
+  <ul>
+      <li><a href="/home/">Home</a></li>
+    <li><a href="/logout/">Logout</a></li>
+    <li><a href="/upload/">Create New Album</a></li>
+    <li><a href="/edit/">Edit Album</a></li>
+    <li><a href="{{ url_for('users')}}">All Users</a></li>
+      <li><a href={{ url_for('recommend_friend') }}>Friend Recommendations</a></li>
+       <li><a href={{ url_for('my_friends') }}>My Friends</a></li>
+      Top Tags:<li><form id="top_tags" action="{{ url_for('search_tags') }}" method="POST" enctype="multipart/form-data">
+          <select form="top_tags" name="search_tags">
+              {% for i in tags %}
+              <option value="{{ i[1] }}">{{ i[1] }}</option>
+              {% endfor %}
+          </select>
+                  <input type="Submit" name="Submit" value="Display Tag">
+                    </form></li>
+        <li><a href="{{ url_for('top10') }}"> Top 10 Users</a> </li>
+
+  </ul>
+</nav>
+
+<article>
+  <p>
+    <form action="/search_tags/" method="POST" enctype="multipart/form-data">
+    <label for="search">Search Tags (Seperated by space):</label>
+    <input type="text" name="search_tags" maxlength="35" >
+    <input type="Submit" name="Submit" value="Tags by all!">
+      <input type="Submit" name="Submit" value="Tags by You!">
+</form>
+    <form action="/search_friends/" method="POST" enctype="multipart/form-data">
+        <label for="search_friends">Search Friends(FirstName LastName):</label>
+    <input type="text" name="search_friends" maxlength="35" >
+    <input type="Submit" name="Submit_friends" value="Find">
+
+    </form>
+      <form action="/search_comment/" method="POST" enctype="multipart/form-data">
+        <label for="search_comment">Search comment:</label>
+    <input type="text" name="search_comment" maxlength="35" >
+    <input type="Submit" name="Submit_search" value="Find">
+
+    </form>
+
+
+
+
+
+
+
+
+
+        </div>
+<div class="container">
+<div class="row">
+<div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<h1 class="gallery-title" align="center">Recently Posted Images</h1>
+</div>
+<br>
+<br/>
+
+
+    {%  for i in Photo_array %}
+        <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter all">
+            <img src="{{ url_for('static', filename = i[3]) }}" width="200" height="85">
+                        <div class="imgButton">
+            <a href="{{url_for('likephoto', photo_d = i[0]) }}"> <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-heart"></span>Like</a></a>
+            {% for k in likes %}
+                {% if k and k[0][0]==i[0] %}
+                    Number of Likes: <a href="{{ url_for('who_liked',data=i[0]) }}">
+                       {{ k[0][1] }}</a>
+                {% endif %}
+                {% endfor %}
+                    <input type="button" onclick="show({{ i[0] }})" value="Comment" name="showbutton" class="btn btn-primary">
+                    <form action="{{ url_for('comment',photo_d=i[0]) }}" method="GET">
+                        <input type="text" id="comment_{{ i[0] }}" name="user_comment" style="display:none;" /><br />
+                    <input type="submit" id="comment_submit_{{ i[0] }}" value="Post" style="display:none;" class="btn"/>
+                    </form>
+                </div>
+        <strong>Comments by users: </strong><br>
+        {% for j in c_uid %}
+            {% if j[2] == i[0] %}
+                <strong>{{ j[0]}}</strong> : {{ j[3] }}<br>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {%  endfor %}
+</div>
+
+
+</div>
+</article>
+
+<footer>PhotoShare</footer>
+
+</div>
+
+
+</body>
+</html>

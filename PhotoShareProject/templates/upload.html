@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+
+<header>
+  <h1> Your Albums</h1>
+</header>
+
+<nav>
+  <ul>
+      <li><a href="/home/">Home</a></li>
+    <li><a href="/logout/">Logout</a></li>
+    <li><a href="/upload/">Create New Album</a></li>
+    <li><a href="/edit/">Edit Album</a></li>
+    <li><a href="{{ url_for('users')}}">All Users</a></li>
+      <li><a href={{ url_for('recommend_friend') }}>Friend Recommendations</a></li>
+       <li><a href={{ url_for('my_friends') }}>My Friends</a></li><br><br>
+      <li><form id="top_tags" action="{{ url_for('search_tags') }}" method="POST" enctype="multipart/form-data">
+          Top Tags :<select form="top_tags" name="search_tags">
+              {% for i in tags %}
+              <option value="{{ i[1] }}">{{ i[1] }}</option>
+          {% endfor %}
+          </select>
+                  <input type="Submit" name="Submit" value="Display Tag">
+                   </form></li>
+        <li><a href="{{ url_for('top10') }}"> Top 10 Users</a> </li><br>
+      <li><a href="{{ url_for('recommended_photos') }}"> Recommended Photos</a> </li>
+
+  </ul>
+</nav>
+
+<article>
+  <p>
+    <form action="/search_tags/" method="POST" enctype="multipart/form-data">
+    <label for="search">Search Tags (Seperated by space):</label>
+    <input type="text" name="search_tags" maxlength="35" >
+    <input type="Submit" name="Submit" value="Tags by all!">
+      <input type="Submit" name="Submit" value="Tags by You!">
+</form>
+    <form action="/search_friends/" method="POST" enctype="multipart/form-data">
+        <label for="search_friends">Search Friends(FirstName LastName):</label>
+    <input type="text" name="search_friends" maxlength="35" >
+    <input type="Submit" name="Submit_friends" value="Find">
+
+    </form>
+      <form action="/search_comment/" method="POST" enctype="multipart/form-data">
+        <label for="search_comment">Search comment:</label>
+    <input type="text" name="search_comment" maxlength="35" >
+    <input type="Submit" name="Submit_search" value="Find">
+
+    </form>
+
+
+
+
+
+<hr>
+    <div class="container" align="left">
+<form method="POST" action="/newalbum/" enctype="multipart/form-data">
+    <br><label for="Album">New Album Name:</label><br>
+  <input type="text" id="Album" name="aname" required>
+    <br>
+    <label for="photo"> Select Photos to Upload (accepted extensions:'png', 'jpg', 'jpeg')</label>
+    <input type="file" id="photo" name="file" value="Select Photos" required><br />
+    <label for="caption">Caption</label>
+    <input type="text" id="Caption" name="caption" ><br>
+    <label for="tags">Tags</label>
+    <input type="text" id="tags" name="tags"><br>
+    <input type="submit" name="newalbum" value="Create New Album">
+</form>
+    </div></article>
+</body>
+</html>

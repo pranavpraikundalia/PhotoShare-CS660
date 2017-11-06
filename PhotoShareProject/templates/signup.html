@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+<div class="container">
+<h1> Sign Up for Photoshare</h1>
+<form action="/signup/", method="POST" class="form-horizontal">
+    <div class="form-group">Email Address:<br></div>
+    <div class="col-sm-9"><input type="email" name="username" required placeholder="Enter a valid email address" maxlength="40"></div>
+  <br>
+              <div class="form-group">First name:<br></div>
+                          <div class="col-sm-9"> <input type="text" name="fname" required></div>
+
+               <br>        <div class="form-group">Last Name:<br></div>
+                         <div class="col-sm-9"><input type="text" name="lname" required></div>
+  <br>
+                   <div class="form-group">Password<br></div>
+                          <div class="col-sm-9"> <input type="password" name="pass" maxlength="20" required></div>
+  <br>
+              <div class="form-group">Re enter Password<br></div>
+                         <div class="col-sm-9"><input type="password" name="pass2" maxlength="20" required></div>
+  <br>
+                <div class="form-group">Birthdate:<br></div>
+    <div class="col-sm-9"> <input type="number" name="bday_year" placeholder="YYYY" min="1917" max="2016" >-<input type="number" placeholder="MM" min="1" max="12" name="bday_month">-<input type="number" placeholder="DD" min="1" max="31" name="bday_day"><br></div>
+                <div class="form-group">Gender:<br></div>
+  <input type="radio" name="gender" value="male" checked> Male<br>
+  <input type="radio" name="gender" value="female"> Female<br>
+  <input type="radio" name="gender" value="other"> Other
+<br>
+    <div class="form-group">Hometown:<br></div>
+                           <div class="col-sm-9"><input type="text" name="htown"><br></div>
+<input type="Submit" name="signup" value="signup">
+    </form> <!-- /form -->
+        </div> <!-- ./container -->
+{{ data }}
+</body>
+</html>

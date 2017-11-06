@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+ <script>
+    function show(i)
+{
+    var x1="comment_"+i
+    var x2="comment_submit_"+i
+document.getElementById(x1).style.display="block" ;
+document.getElementById(x2).style.display="block" ;
+}
+</script>
+</head>
+
+
+<header>
+  <h1>Top 10 users </h1>
+</header>
+
+<br><br>
+<nav>
+  <ul>
+      <li><a href="/home/">Home</a></li>
+    <li><a href="/logout/">Logout</a></li>
+    <li><a href="/upload/">Create New Album</a></li>
+    <li><a href="/edit/">Edit Album</a></li>
+    <li><a href="{{ url_for('users')}}">All Users</a></li>
+      <li><a href={{ url_for('recommend_friend') }}>Friend Recommendations</a></li>
+       <li><a href={{ url_for('my_friends') }}>My Friends</a></li>
+  Top Tags:
+      <li><form id="top_tags" action="{{ url_for('search_tags') }}" method="POST" enctype="multipart/form-data">
+          <select form="top_tags" name="search_tags">
+              {% for i in tags %}
+              <option value="{{ i[1] }}">{{ i[1] }}</option>
+              {% endfor %}
+          </select>
+                  <input type="Submit" name="Submit" value="Display Tag">
+                    </form></li>
+        <li><a href="{{ url_for('top10') }}"> Top 10 Users</a> </li>
+<li><a href="{{ url_for('recommended_photos') }}"> Recommended Photos</a> </li>
+  </ul>
+</nav>
+<div class="container">
+<div align="left">
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Keep commenting and posting!">
+  Want to be amongst the top 10 users?
+</button>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name </th>
+      <th>Points</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  <ul>
+    {% for i in list %}
+        {% for j in uname %}
+            {% if i[1] == j[1][0][1] %}
+
+                <tr>
+                <th scope="row"><li></li></th>
+                <td>{{ j[1][0][0] }}</td>
+                <td>{{ i[0] }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+  </ul>
+  </tbody>
+</table>
+    <div></div>
+
+
+  <p>
+    <form action="/search_tags/" method="POST" enctype="multipart/form-data">
+    <label for="search">Search Tags (Seperated by space):</label>
+    <input type="text" name="search_tags" maxlength="35" >
+    <input type="Submit" name="Submit" value="Tags by all!">
+      <input type="Submit" name="Submit" value="Tags by You!">
+</form>
+    <form action="/search_friends/" method="POST" enctype="multipart/form-data">
+        <label for="search_friends">Search Friends(FirstName LastName):</label>
+    <input type="text" name="search_friends" maxlength="35" >
+    <input type="Submit" name="Submit_friends" value="Find">
+
+    </form>
+      <form action="/search_comment/" method="POST" enctype="multipart/form-data">
+        <label for="search_comment">Search comment:</label>
+    <input type="text" name="search_comment" maxlength="35" >
+    <input type="Submit" name="Submit_search" value="Find">
+
+    </form>
+
+
+    <br>
+</article>
+</div>
+
+</body>
+</html>

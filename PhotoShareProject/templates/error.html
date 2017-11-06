@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <script>
+    function show(i)
+{
+    var x1="comment_"+i
+    var x2="comment_submit_"+i
+document.getElementById(x1).style.display="block" ;
+document.getElementById(x2).style.display="block" ;
+}
+</script>
+</head>
+
+
+<header>
+  <h1>Welcome {{data}} </h1>
+</header>
+
+<nav>
+  <ul>
+      <li><a href="/home/">Home</a></li>
+    <li><a href="/logout/">Logout</a></li>
+    <li><a href="/upload/">Create New Album</a></li>
+    <li><a href="/edit/">Edit Album</a></li>
+    <li><a href="{{ url_for('users')}}">All Users</a></li>
+      <li><a href={{ url_for('recommend_friend') }}>Friend Recommendations</a></li>
+       <li><a href={{ url_for('my_friends') }}>My Friends</a></li><br><br>
+      <li><form id="top_tags" action="{{ url_for('search_tags') }}" method="POST" enctype="multipart/form-data">
+          Top Tags :<select form="top_tags" name="search_tags">
+              {% for i in tags %}
+              <option value="{{ i[1] }}">{{ i[1] }}</option>
+                  <input type="Submit" name="Submit" value="Display Tag">
+              {% endfor %}
+          </select>      </form></li>
+        <li><a href="{{ url_for('top10') }}"> Top 10 Users</a> </li><br>
+      <li><a href="{{ url_for('recommended_photos') }}"> Recommended Photos</a> </li>
+
+  </ul>
+</nav>
+
+<article>
+    <h3>{{ data }}</h3>
+</article>
+
+<footer>PhotoShare</footer>
+
+</div>
+
+
+</body>
+</html>
