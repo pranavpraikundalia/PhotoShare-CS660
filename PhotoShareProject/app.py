@@ -5,8 +5,8 @@ import datetime, os, shutil
 app = Flask(__name__, static_folder="static")
 mysql = MySQL()
 
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'I(E(ream7861'
+app.config['MYSQL_DATABASE_USER'] = 'root' # add your database user name 
+app.config['MYSQL_DATABASE_PASSWORD'] = '' # add your database password
 app.config['MYSQL_DATABASE_DB'] = 'PhotoShare'
 app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 mysql.init_app(app)
@@ -934,4 +934,3 @@ def click_tag(tag):
 if __name__ == '__main__':
     app.secret_key = 'PhotoShare_VaibhavPranav'
     app.run()
-
